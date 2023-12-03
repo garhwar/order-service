@@ -14,7 +14,7 @@ public class Order {
     private Long id;
     @Column(name = "user_id")
     private Long userId;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts;
     @Column(name = "status")
     private String status; // Pending, Confirmed, Shipped, Delivered

@@ -1,5 +1,6 @@
 package com.pesto.orderservice.web.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pesto.orderservice.domain.entity.Order;
 import com.pesto.orderservice.service.OrderService;
 import com.pesto.orderservice.service.ProductService;
@@ -28,17 +29,17 @@ public class OrderController {
     ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) throws JsonProcessingException {
         // Fetch user details and validate
 //        UserDetails userDetails = userService.getUserDetails(orderRequest.getUserId());
         UserDetails userDetails = new UserDetails();
 
         // Fetch product details and validate
-        List<ProductDetails.Product> returnedProducts = productService.getProductsDetails(
+        List<ProductDetails.Product> productsDetails = productService.getProductsDetails(
                 orderRequest.getOrderProducts().stream().toList());
 
         // Create and save order
-        Order savedOrder = orderService.saveOrder(userDetails, returnedProducts);
+        Order savedOrder = orderService.createOrder(userDetails, productsDetails, orderRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
     }
