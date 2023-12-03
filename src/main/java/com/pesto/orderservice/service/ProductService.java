@@ -28,7 +28,7 @@ public class ProductService {
                 ProductDetails.Product::getProductId, ProductDetails.Product::getQuantityAvailable
         ));
         if (returnedProducts.getContent().size() != orderRequestMap.size())
-            throw new IllegalStateException("Requested products not returned");
+            throw new IllegalStateException("Products in order not found in product service");
         for (Long externalId: orderRequestMap.keySet())
             if (orderRequestMap.get(externalId) > returnedProductsMap.get(externalId))
                 throw new IllegalStateException("Product is out of stock");
