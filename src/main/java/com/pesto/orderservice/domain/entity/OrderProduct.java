@@ -14,6 +14,10 @@ public class OrderProduct {
 
     @Column(name = "external_id")
     private Long externalId;
+
+    @Column(name = "quantity")
+    private int quantity;
+
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     @JsonIgnore
@@ -43,16 +47,24 @@ public class OrderProduct {
         this.order = order;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderProduct that = (OrderProduct) o;
-        return Objects.equals(id, that.id) && Objects.equals(externalId, that.externalId) && Objects.equals(order, that.order);
+        return Objects.equals(id, that.id) && Objects.equals(externalId, that.externalId) && Objects.equals(order, that.order) && Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, externalId, order);
+        return Objects.hash(id, externalId, order, quantity);
     }
 }

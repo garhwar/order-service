@@ -18,7 +18,7 @@ public class ProductService {
         return productServiceClient.getProductByExternalId(externalId);
     }
 
-    public List<ProductDetails.Product> getProductsDetails(List<OrderRequest.OrderProduct> orderProducts) {
+    public void validateProductsDetails(List<OrderRequest.OrderProduct> orderProducts) {
         Map<Long, Integer> orderRequestMap = orderProducts.stream().collect(Collectors.toMap(
                 OrderRequest.OrderProduct::getProductId, OrderRequest.OrderProduct::getQuantity
         ));
@@ -33,6 +33,5 @@ public class ProductService {
             if (orderRequestMap.get(externalId) > returnedProductsMap.get(externalId))
                 throw new IllegalStateException("Product is out of stock");
 
-        return returnedProducts.getContent();
     }
 }
